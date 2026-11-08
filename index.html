@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام التحضير الذكي - الرئيسية</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="team-credits">عمل الطالبات: بسمه العمودي - يارا النهدي - ريم موسى - روان عماد - جود حمد</div>
+
+        <header class="main-header">
+            <div>
+                <h1>نظام التحضير الذكي </h1>
+                <button class="btn-theme" onclick="toggleDarkMode()">🌙 / ☀️ </button>
+            </div>
+            <div class="clock-card">
+                <span>الوقت:</span>
+                <div id="clock" class="clock-display">00:00:00</div>
+            </div>
+        </header>
+
+        <section class="section-card">
+            <h2>اختاري الفصل لعرضه أو تحضيره</h2>
+            <!-- الصف الأول: من 3-1 إلى 3-4 -->
+            <div class="class-buttons" style="margin-bottom: 10px;">
+                <button class="btn btn-class" onclick="selectClass('3-1')">فصل 3-1</button>
+                <button class="btn btn-class" onclick="selectClass('3-2')">فصل 3-2</button>
+                <button class="btn btn-class" onclick="selectClass('3-3')">فصل 3-3</button>
+                <button class="btn btn-class" onclick="selectClass('3-4')">فصل 3-4</button>
+            </div>
+            <!-- الصف الثاني: من 3-5 إلى 3-8 -->
+            <div class="class-buttons">
+                <button class="btn btn-class" onclick="selectClass('3-5')">فصل 3-5</button>
+                <button class="btn btn-class" onclick="selectClass('3-6')">فصل 3-6</button>
+                <button class="btn btn-class primary" onclick="selectClass('3-7')">فصل 3-7</button>
+                <button class="btn btn-class" onclick="selectClass('3-8')">فصل 3-8</button>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2>أدوات التحضير السريع</h2>
+            <div class="action-buttons">
+                <button class="btn btn-qr" onclick="toggleScanner()">📷 مسح QR Code</button>
+                <button class="btn btn-manual" onclick="manualAttendance()"> تحضير يدوي</button>
+            </div>
+            <div id="qr-reader" style="width: 100%; max-width: 400px; margin: 15px auto; display: none;"></div>
+        </section>
+
+        <section class="section-card">
+            <h2>السجلات والتقارير العامة</h2>
+            <div class="action-buttons">
+                <button class="btn btn-class primary" onclick="goToDailyLogPage()">📄 سجل التحضير اليومي</button>
+                <button class="btn btn-manual" onclick="goToLatePage()">📋 سجل المتأخرات</button>
+                <button class="btn btn-qr" onclick="goToAbsentPage()">❌ سجل الغائبات</button>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2>الإعدادات العامة</h2>
+            <div class="action-buttons">
+                <button class="btn btn-reset" onclick="resetAllDataPrompt()">🔄 تصفير السجلات التراكمية</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

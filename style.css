@@ -1,0 +1,335 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    color: #333;
+    padding: 20px;
+    direction: rtl;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* حقوق وحسابات الفريق */
+.team-credits {
+    background-color: #ffffff;
+    color: #002b49;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+body.dark-mode .team-credits {
+    background-color: #1e293b;
+    color: #38bdf8;
+    border-color: #334155;
+}
+
+/* الهيدر والترويسة الرئيسية */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #002b49;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+body.dark-mode .main-header {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+}
+
+.btn-theme {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.clock-card {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.clock-display {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* الكروت والأقسام */
+.section-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+body.dark-mode .section-card {
+    background-color: #1e293b;
+    box-shadow: none;
+    border: 1px solid #334155;
+}
+
+.section-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #002b49;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+body.dark-mode .section-card h2 {
+    color: #38bdf8;
+    border-bottom-color: #334155;
+}
+
+/* أزرار الفصول والتحكم */
+.class-buttons, .action-buttons, .nav-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-class {
+    background-color: #e2e8f0;
+    color: #1e293b;
+    flex: 1;
+    min-width: 100px;
+}
+
+body.dark-mode .btn-class {
+    background-color: #334155;
+    color: #f8fafc;
+}
+
+.btn-class:hover {
+    background-color: #cbd5e1;
+}
+
+.btn-class.primary {
+    background-color: #002b49;
+    color: white;
+}
+
+.btn-qr { background-color: #10b981; color: white; }
+.btn-manual { background-color: #f59e0b; color: white; }
+.btn-transfer { background-color: #3b82f6; color: white; }
+.btn-nav { background-color: #64748b; color: white; }
+.btn-pdf { background-color: #0284c7; color: white; }
+.btn-reset { background-color: #dc2626; color: white; }
+
+/* فلترة الأشهر */
+.month-filter-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-month {
+    background-color: #e2e8f0;
+    color: #1e293b;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    flex: 1;
+    min-width: 80px;
+}
+
+body.dark-mode .btn-month {
+    background-color: #334155;
+    color: #f8fafc;
+}
+
+.btn-month.active {
+    background-color: #0284c7;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* الجداول */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: right;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+body.dark-mode th, body.dark-mode td {
+    border-bottom-color: #334155;
+}
+
+th {
+    background-color: #f8fafc;
+    color: #475569;
+}
+
+body.dark-mode th {
+    background-color: #0f172a;
+    color: #94a3b8;
+}
+
+/* حالات الحضور والغياب */
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status.present { background-color: #d1fae5; color: #065f46; }
+.status.late { background-color: #fef3c7; color: #92400e; }
+.status.absent { background-color: #fee2e2; color: #991b1b; }
+
+.clickable-status {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* الشارات والعدادات */
+.time-badge, .count-badge, .absence-badge {
+    background-color: #e2e8f0;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+body.dark-mode .time-badge, 
+body.dark-mode .count-badge, 
+body.dark-mode .absence-badge {
+    background-color: #334155;
+    color: #f8fafc;
+}
+
+.warning-badge {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+body.dark-mode .warning-badge {
+    background-color: #450a0a;
+    color: #fca5a5;
+    border-color: #991b1b;
+}
+
+.no-lates-msg, .no-absent-msg {
+    text-align: center;
+    color: #94a3b8;
+    padding: 20px;
+}
+
+/* =========================================================
+   تنسيقات الطباعة وتصدير PDF
+   ========================================================= */
+@media print {
+    .btn, 
+    .action-buttons, 
+    .class-buttons, 
+    .nav-links, 
+    .clock-card,
+    .btn-theme,
+    #qr-reader,
+    .main-header,
+    .team-credits,
+    .month-filter-buttons {
+        display: none !important;
+    }
+
+    body, body.dark-mode {
+        background-color: white !important;
+        padding: 0;
+        color: black !important;
+    }
+
+    .container {
+        max-width: 100%;
+        box-shadow: none;
+    }
+
+    .section-card {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        background-color: white !important;
+    }
+
+    .print-title {
+        display: block !important;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: black !important;
+    }
+
+    table {
+        width: 100%;
+        border: 1px solid #000;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 8px;
+        color: black !important;
+        background-color: white !important;
+    }
+}
+
+.print-title {
+    display: none;
+}

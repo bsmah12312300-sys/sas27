@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجل التأخير</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="team-credits">عمل الطالبات: بسمه العمودي - يارا النهدي - ريم موسى - روان عماد - جود حمد</div>
+
+        <header class="main-header">
+            <div>
+                <h1>نظام التحضير الذكي 📋</h1>
+                <button class="btn-theme" onclick="toggleDarkMode()">🌙 / ☀️ الوضع</button>
+            </div>
+            <div class="clock-card">
+                <span>الوقت:</span>
+                <div id="clock" class="clock-display">00:00:00</div>
+            </div>
+        </header>
+
+        <section class="section-card">
+            <h2> سجل التأخير لجميع الشهور (لكل الفصول)</h2>
+            <div class="month-filter-buttons" id="monthFilterContainer">
+                <button class="btn btn-month active" onclick="filterByMonth('all')">جميع الشهور</button>
+                <button class="btn btn-month" onclick="filterByMonth('1')">شهر 1</button>
+                <button class="btn btn-month" onclick="filterByMonth('2')">شهر 2</button>
+                <button class="btn btn-month" onclick="filterByMonth('3')">شهر 3</button>
+                <button class="btn btn-month" onclick="filterByMonth('4')">شهر 4</button>
+                <button class="btn btn-month" onclick="filterByMonth('5')">شهر 5</button>
+                <button class="btn btn-month" onclick="filterByMonth('6')">شهر 6</button>
+                <button class="btn btn-month" onclick="filterByMonth('7')">شهر 7</button>
+                <button class="btn btn-month" onclick="filterByMonth('8')">شهر 8</button>
+                <button class="btn btn-month" onclick="filterByMonth('9')">شهر 9</button>
+                <button class="btn btn-month" onclick="filterByMonth('10')">شهر 10</button>
+                <button class="btn btn-month" onclick="filterByMonth('11')">شهر 11</button>
+                <button class="btn btn-month" onclick="filterByMonth('12')">شهر 12</button>
+            </div>
+        </section>
+
+        <section class="section-card late-section-card">
+            <h1 class="print-title" id="printTitleLate">سجل التأخير الشامل</h1>
+            <h2 id="lateClassTitle">سجل التأخير <span id="monthTitleText">الشامل لجميع الشهور</span></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>اسم الطالبة</th>
+                        <th>الفصل</th>
+                        <th>التاريخ</th>
+                        <th>الوقت</th>
+                        <th>عدد المرات والتنبيه</th>
+                    </tr>
+                </thead>
+                <tbody id="lateStudentsList"></tbody>
+            </table>
+        </section>
+
+        <div class="nav-links" style="margin-top: 10px;">
+            <button class="btn btn-nav" onclick="goHome()">🏠 الرئيسية</button>
+            <button class="btn btn-nav" onclick="goToClassPage()">📄 جدول الحضور</button>
+            <button class="btn btn-pdf" onclick="exportToPDF()">📥 تصدير PDF</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

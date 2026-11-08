@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السجل التفصيلي للطالبة</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="team-credits">عمل الطالبات: بسمه العمودي - يارا النهدي - ريم موسى - روان عماد - جود حمد</div>
+
+        <header class="main-header">
+            <div>
+                <h1>نظام التحضير الذكي 📋</h1>
+                <button class="btn-theme" onclick="toggleDarkMode()">🌙 / ☀️ الوضع</button>
+            </div>
+            <div class="clock-card">
+                <span>الوقت:</span>
+                <div id="clock" class="clock-display">00:00:00</div>
+            </div>
+        </header>
+
+        <section class="section-card">
+            <h1 class="print-title" id="printTitleStudentLog">السجل التفصيلي</h1>
+            <h2 id="studentLogTitle">سجل التفاصيل للطالبة</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>التاريخ</th>
+                        <th>الوقت المسجل</th>
+                    </tr>
+                </thead>
+                <tbody id="studentLogList"></tbody>
+            </table>
+        </section>
+
+        <div class="nav-links" style="margin-top: 15px;">
+            <button class="btn btn-nav" onclick="history.back()">🔙 العودة للصفحة السابقة</button>
+            <button class="btn btn-nav" onclick="goHome()">🏠 الرئيسية</button>
+            <button class="btn btn-pdf" onclick="exportToPDF()">📥 تصدير PDF</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const studentName = localStorage.getItem('viewStudentName');
+            const type = localStorage.getItem('viewStudentType');
+
+            const titleEl = document.getElementById('studentLogTitle');
+            const tbody = document.getElementById('studentLogList');
+
+            if (!studentName || !tbody) return;
+
+            const classesList = ["3-1", "3-2", "3-3", "3-4", "3-5", "3-6", "3-7", "3-8"];
+            let checkedCount = 0;
+            let foundStudent = null;
+            let foundClass = "";
+
+            classesList.forEach(c => {
+                getClassData(c, (students) => {
+                    const match = students.find(s => s.name.trim().toLowerCase() === studentName.trim().toLowerCase());
+                    if (match && !foundStudent) {
+                        foundStudent = match;
+                        foundClass = c;
+                    }
+                    checkedCount++;
+
+                    if (checkedCount === classesList.length) {
+                        if (!foundStudent) {
+                            if (titleEl) titleEl.innerText = "لم يتم العثور على بيانات الطالبة";
+                            tbody.innerHTML = `<tr><td colspan="3" class="no-lates-msg">لا توجد بيانات متاحة.</td></tr>`;
+                            return;
+                        }
+
+                        const isLate = type === 'late';
+                        const records = isLate ? (foundStudent.lateRecords || []) : (foundStudent.absenceRecords || []);
+                        const typeName = isLate ? "التأخير" : "الغياب";
+
+                        if (titleEl) {
+                            titleEl.innerText = `سجل تفاصيل ${typeName} للطالبة: ${foundStudent.name} (فصل ${foundClass})`;
+                        }
+
+                        tbody.innerHTML = "";
+
+                        if (records.length === 0) {
+                            const totalCount = isLate ? (foundStudent.lateCount || 0) : (foundStudent.absenceCount || 0);
+                            tbody.innerHTML = `<tr><td colspan="3" class="no-lates-msg">إجمالي مرات ${typeName} المسجلة: (${totalCount} مرة).<br><small style="color: #94a3b8;">(السجلات المفصلة بالأوقات تبدأ بالظهور للعمليات المسجلة حديثاً).</small></td></tr>`;
+                            return;
+                        }
+
+                        records.forEach((rec, index) => {
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${rec.date || "اليوم"}</td>
+                                    <td><span class="time-badge">${rec.time || "--:--"}</span></td>
+                                </tr>
+                            `;
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

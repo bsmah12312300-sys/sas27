@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجل تأخير الفصل</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="team-credits">عمل الطالبات: بسمه العمودي - يارا النهدي - ريم موسى - روان عماد - جود حمد</div>
+
+        <header class="main-header">
+            <div>
+                <h1>نظام التحضير الذكي 📋</h1>
+                <button class="btn-theme" onclick="toggleDarkMode()">🌙 / ☀️ الوضع</button>
+            </div>
+            <div class="clock-card">
+                <span>الوقت:</span>
+                <div id="clock" class="clock-display">00:00:00</div>
+            </div>
+        </header>
+
+        <section class="section-card">
+            <h1 class="print-title" id="printTitleClassLate">سجل تأخير الفصل</h1>
+            <h2 id="classLateTitle">سجل التأخير - الفصل الحالي</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>اسم الطالبة</th>
+                        <th>التاريخ</th>
+                        <th>الوقت</th>
+                        <th>مرات التأخير</th>
+                    </tr>
+                </thead>
+                <tbody id="classLateStudentsList"></tbody>
+            </table>
+        </section>
+
+        <div class="nav-links" style="margin-top: 15px;">
+            <button class="btn btn-nav" onclick="goToClassPage()">🔙 العودة للفصل</button>
+            <button class="btn btn-nav" onclick="goHome()">🏠 الرئيسية</button>
+            <button class="btn btn-pdf" onclick="exportToPDF()">📥 تصدير PDF</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentClass = localStorage.getItem('selectedClass') || "3-7";
+            const titleEl = document.getElementById('classLateTitle');
+            if (titleEl) titleEl.innerText = `سجل التأخير - فصل ${currentClass}`;
+            
+            getClassData(currentClass, (students) => {
+                const lates = students.filter(s => (s.lateCount && s.lateCount > 0) || s.status === "متاخرة");
+                const tbody = document.getElementById('classLateStudentsList');
+                if (!tbody) return;
+                tbody.innerHTML = "";
+
+                if (lates.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="no-lates-msg">لا توجد طالبات متأخرات في هذا الفصل حتى الآن.</td></tr>`;
+                    return;
+                }
+
+                lates.forEach((student, index) => {
+                    const count = Number(student.lateCount) || 1;
+                    const warning = count >= 3 ? `<span class="warning-badge">⚠️ تجاوزت 3 مرات</span>` : "";
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${student.name}</td>
+                            <td>${student.date || "اليوم"}</td>
+                            <td><span class="time-badge">${student.time || "--:--"}</span></td>
+                            <td>
+                                <span class="count-badge" onclick="showStudentDetails('${student.name}', 'late')" style="cursor:pointer; color:#0284c7; text-decoration:underline;" title="اضغطي لعرض سجل التأخير بالتفصيل">
+                                    ${count} مرة 🔽
+                                </span> ${warning}
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
